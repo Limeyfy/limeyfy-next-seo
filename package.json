@@ -1,6 +1,6 @@
 {
   "name": "@limeyfy/next-seo",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A library to help with easily maintain good SEO in react. Made by \"https://github.com/notlimey\"",
   "main": "src/index.ts",
   "files": [
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Limeyfy/react-seo.git"
+    "url": "git+https://github.com/Limeyfy/next-seo.git"
   },
   "keywords": [
     "react",
@@ -21,7 +21,7 @@
   "author": "Limey",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Limeyfy/react-seo/issues"
+    "url": "https://github.com/Limeyfy/next-seo/issues"
   },
   "directories": {
     "src": "src"
@@ -31,7 +31,7 @@
     "not dead",
     "not op_mini all"
   ],
-  "homepage": "https://github.com/Limeyfy/react-seo#readme",
+  "homepage": "https://github.com/Limeyfy/next-seo#readme",
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.1",
     "@types/node": "^17.0.21",
