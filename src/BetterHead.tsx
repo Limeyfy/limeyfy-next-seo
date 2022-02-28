@@ -27,6 +27,7 @@ interface DefaultHelmetProps {
     children?: React.ReactNode;
     ogType?: string;
     twitterCard?: string;
+    themeColor?: string;
 }
 
 export const BetterHead = (props : DefaultHelmetProps) => {
@@ -97,6 +98,7 @@ export const BetterHead = (props : DefaultHelmetProps) => {
                 <meta property="og:type" content={props.ogType ?? "website"} />
                 <meta property="twitter:card" content={props.twitterCard ?? "summary_large_image"} />
                 {props.children}
+                {props.themeColor && <meta name=" theme-color" content={props.themeColor} />}
             </Head>
             {props.url && 
                 <Head>
