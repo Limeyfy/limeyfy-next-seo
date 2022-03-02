@@ -97,9 +97,11 @@ export const BetterHead = (props : DefaultHelmetProps) => {
                 {props.favIcon && <link rel="icon" type="image/x-icon" href={props.favIcon} />}
                 <meta property="og:type" content={props.ogType ?? "website"} />
                 <meta property="twitter:card" content={props.twitterCard ?? "summary_large_image"} />
-                {props.themeColor && <meta name=" theme-color" content={props.themeColor} />}
                 {props.children}
             </Head>
+            {props.themeColor && <Head>
+                <meta name="theme-color" content={props.themeColor} />
+            </Head>}
             {props.url && 
                 <Head>
                     <meta name="url" content={props.url} />
