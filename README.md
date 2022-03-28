@@ -36,14 +36,13 @@ export default MyApp
 ```jsx
 import '../common/styles/globals.scss'
 import type { AppProps } from 'next/app'
-import { BetterHead, CheckSeo } from '@limeyfy/next-seo'
+import { BetterHead, useSeo } from '@limeyfy/next-seo'
 
 function MyApp({ Component, pageProps }: AppProps) {
 
-  // Call checkSeo in useEffect
-  useEffect(() => {
-    CheckSeo();
-  }, [])
+  const { result } = useSeo();
+
+  console.log(result())
 
   return (
     <>
@@ -91,6 +90,7 @@ export default MyApp
 - subTitle?: <code>string</code>;
 - titleDivider?: <code>string</code>;
 - keywords?: <code>string</code>;
+- themeColor?: <code>string</code>;
 - description?: <code>string</code>;
 - subject?: <code>string</code>;
 - copyright?: <code>string</code>;
