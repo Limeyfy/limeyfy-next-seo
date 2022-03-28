@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 
-let defaultSettings : any = {}
+let defaultSettings: any = {}
 
 interface DefaultHelmetProps {
     title?: string;
@@ -30,15 +30,15 @@ interface DefaultHelmetProps {
     themeColor?: string;
 }
 
-export const BetterHead = (props : DefaultHelmetProps) => {
+export const BetterHead = (props: DefaultHelmetProps) => {
 
     const _defaultSettings = defaultSettings;
 
     const keys = Object.keys(props);
-    for(var i = 0; i < keys.length; i++) {
-        if(keys[i] === "title") _defaultSettings.title = props.title;
-        if(keys[i] === "subTitle") _defaultSettings.subTitle = props.subTitle;
-        if(keys[i] === "titleDivider") _defaultSettings.titleDivider = props.titleDivider;
+    for (var i = 0; i < keys.length; i++) {
+        if (keys[i] === "title") _defaultSettings.title = props.title;
+        if (keys[i] === "subTitle") _defaultSettings.subTitle = props.subTitle;
+        if (keys[i] === "titleDivider") _defaultSettings.titleDivider = props.titleDivider;
     }
 
     const getTitle = () => {
@@ -46,10 +46,10 @@ export const BetterHead = (props : DefaultHelmetProps) => {
         let text = "";
 
         text = text + title;
-        if(props.subTitle || _defaultSettings.subTitle) {
-            if(props.titleDivider || _defaultSettings.titleDivider) {
+        if (props.subTitle || _defaultSettings.subTitle) {
+            if (props.titleDivider || _defaultSettings.titleDivider) {
                 text = text + ` ${props.titleDivider ?? _defaultSettings.titleDivider} `
-            }else {
+            } else {
                 text = text + ` | `
             }
             text = text + props.subTitle ?? _defaultSettings.subTitle;
@@ -63,7 +63,7 @@ export const BetterHead = (props : DefaultHelmetProps) => {
             {(
                 (props.title || _defaultSettings.title) ||
                 (props.subTitle)
-            )&&
+            ) &&
                 <Head>
                     <title>
                         {getTitle()}
@@ -75,7 +75,7 @@ export const BetterHead = (props : DefaultHelmetProps) => {
             }
             {props.description &&
                 <Head>
-                    <meta name="description" content={props.description}/>
+                    <meta name="description" content={props.description} />
                     <meta property="og:description" content={props.description} />
                     <meta property="twitter:description" content={props.description} />
                 </Head>
@@ -102,14 +102,14 @@ export const BetterHead = (props : DefaultHelmetProps) => {
             {props.themeColor && <Head>
                 <meta name="theme-color" content={props.themeColor} />
             </Head>}
-            {props.url && 
+            {props.url &&
                 <Head>
                     <meta name="url" content={props.url} />
                     <meta property="og:url" content={props.url} />
                     <meta property="twitter:url" content={props.url} />
-                </Head> 
+                </Head>
             }
-            {props.image && 
+            {props.image &&
                 <Head>
                     <meta property="og:image" content={props.image} />
                     <meta property="twitter:image" content={props.image} />
