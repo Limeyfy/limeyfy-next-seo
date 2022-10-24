@@ -1,120 +1,84 @@
-import React from "react";
-import Head from "next/head";
+import Head from 'next/head';
+import React, { FC, ReactNode, useContext } from 'react';
+import { HelmetContext } from './HeadProvider';
+import { HeadType } from './types';
 
-let defaultSettings: any = {}
+export const BetterHead: FC<HeadType> = (props) => {
+    const defaultValues: HeadType | undefined =
+        useContext<HeadType>(HelmetContext);
 
-interface DefaultHelmetProps {
-    title?: string;
-    subTitle?: string;
-    titleDivider?: string;
-    keywords?: string;
-    description?: string;
-    subject?: string;
-    copyright?: string;
-    language?: string;
-    robots?: string;
-    revised?: string;
-    topic?: string;
-    summary?: string;
-    Classification?: string;
-    author?: string;
-    replyTo?: string;
-    owner?: string;
-    url?: string;
-    identifierURL?: string;
-    image?: string;
-    favIcon?: string;
-    children?: React.ReactNode;
-    ogType?: string;
-    twitterCard?: string;
-    themeColor?: string;
-}
+    const getVal = (key: keyof HeadType): string => {
+        return props[key] || defaultValues?.[key] || '';
+    };
 
-export const BetterHead = (props: DefaultHelmetProps) => {
-
-    const _defaultSettings = defaultSettings;
-
-    const keys = Object.keys(props);
-    for (var i = 0; i < keys.length; i++) {
-        if (keys[i] === "title") _defaultSettings.title = props.title;
-        if (keys[i] === "subTitle") _defaultSettings.subTitle = props.subTitle;
-        if (keys[i] === "titleDivider") _defaultSettings.titleDivider = props.titleDivider;
-    }
-
-    const getTitle = () => {
-        const title = props.title ?? _defaultSettings.title;
-        let text = "";
-
-        text = text + title;
-        if (props.subTitle || _defaultSettings.subTitle) {
-            if (props.titleDivider || _defaultSettings.titleDivider) {
-                text = text + ` ${props.titleDivider ?? _defaultSettings.titleDivider} `
-            } else {
-                text = text + ` | `
-            }
-            text = text + props.subTitle ?? _defaultSettings.subTitle;
-        }
-
-        return text;
-    }
+    const renderVal = (key: keyof HeadType): ReactNode => {
+        const val = getVal(key);
+        if (!val || val === '') return null;
+        return <meta name={key} content={val} />;
+    };
 
     return (
         <>
-            {(
-                (props.title || _defaultSettings.title) ||
-                (props.subTitle)
-            ) &&
-                <Head>
-                    <title>
-                        {getTitle()}
-                    </title>
-                    <meta name="title" content={getTitle()} />
-                    <meta property="og:title" content={getTitle()} />
-                    <meta property="twitter:title" content={getTitle()} />
-                </Head>
-            }
-            {props.description &&
-                <Head>
-                    <meta name="description" content={props.description} />
-                    <meta property="og:description" content={props.description} />
-                    <meta property="twitter:description" content={props.description} />
-                </Head>
-            }
             <Head>
-                {props.keywords && <meta name="keywords" content={props.keywords} />}
-                {props.subject && <meta name="subject" content={props.subject} />}
-                {props.copyright && <meta name="copyright" content={props.copyright} />}
-                {props.language && <meta name="language" content={props.language} />}
-                {props.robots && <meta name="robots" content={props.robots} />}
-                {props.revised && <meta name="revised" content={props.revised} />}
-                {props.topic && <meta name="topic" content={props.topic} />}
-                {props.summary && <meta name="summary" content={props.summary} />}
-                {props.Classification && <meta name="Classification" content={props.Classification} />}
-                {props.author && <meta name="author" content={props.author} />}
-                {props.replyTo && <meta name="replyTo" content={props.replyTo} />}
-                {props.owner && <meta name="owner" content={props.owner} />}
-                {props.identifierURL && <meta name="identifierURL" content={props.identifierURL} />}
-                {props.favIcon && <link rel="icon" type="image/x-icon" href={props.favIcon} />}
-                <meta property="og:type" content={props.ogType ?? "website"} />
-                <meta property="twitter:card" content={props.twitterCard ?? "summary_large_image"} />
+                <title>{getVal('title')}</title>
+                <meta name='title' content={getVal('title')} />
+                <meta property='og:title' content={getVal('title')} />
+                <meta property='twitter:title' content={getVal('title')} />
+            </Head>
+            {props.description ||
+                (defaultValues.description && (
+                    <Head>
+                        <meta
+                            name='description'
+                            content={getVal('description')}
+                        />
+                        <meta
+                            property='og:description'
+                            content={getVal('description')}
+                        />
+                        <meta
+                            property='twitter:description'
+                            content={getVal('description')}
+                        />
+                    </Head>
+                ))}
+            <Head>
+                {renderVal('keywords')}
+                {renderVal('themeColor')}
+                {renderVal('subject')}
+                {renderVal('language')}
+                {renderVal('robots')}
+                {renderVal('revised')}
+                {renderVal('topic')}
+                {renderVal('summary')}
+                {renderVal('Classification')}
+                {renderVal('author')}
+                {renderVal('replyTo')}
+                {renderVal('owner')}
+                {renderVal('identifierURL')}
+                {props.favIcon && (
+                    <link rel='icon' type='image/x-icon' href={props.favIcon} />
+                )}
+                <meta property='og:type' content={props.ogType ?? 'website'} />
+                <meta
+                    property='twitter:card'
+                    content={props.twitterCard ?? 'summary_large_image'}
+                />
                 {props.children}
             </Head>
-            {props.themeColor && <Head>
-                <meta name="theme-color" content={props.themeColor} />
-            </Head>}
-            {props.url &&
+            {props.url && (
                 <Head>
-                    <meta name="url" content={props.url} />
-                    <meta property="og:url" content={props.url} />
-                    <meta property="twitter:url" content={props.url} />
+                    <meta name='url' content={props.url} />
+                    <meta property='og:url' content={props.url} />
+                    <meta property='twitter:url' content={props.url} />
                 </Head>
-            }
-            {props.image &&
+            )}
+            {props.image && (
                 <Head>
-                    <meta property="og:image" content={props.image} />
-                    <meta property="twitter:image" content={props.image} />
+                    <meta property='og:image' content={props.image} />
+                    <meta property='twitter:image' content={props.image} />
                 </Head>
-            }
+            )}
         </>
-    )
-}
+    );
+};

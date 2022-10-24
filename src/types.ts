@@ -1,5 +1,5 @@
-import React from "react";
-interface DefaultHelmetProps {
+
+export type HeadType = {
     title?: string;
     subTitle?: string;
     titleDivider?: string;
@@ -20,10 +20,11 @@ interface DefaultHelmetProps {
     identifierURL?: string;
     image?: string;
     favIcon?: string;
-    children?: React.ReactNode;
     ogType?: string;
     twitterCard?: string;
     themeColor?: string;
 }
-export declare const BetterHead: (props: DefaultHelmetProps) => JSX.Element;
-export {};
+
+export type HeadProviderType = {
+    children?: React.ReactNode;
+} & HeadType;
