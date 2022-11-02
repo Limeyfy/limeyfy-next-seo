@@ -25,6 +25,10 @@ export type HeadType = {
     themeColor?: string;
 }
 
+export type HeadProps = HeadType & {
+    reverseTitle?: boolean;
+}
+
 export type HeadProviderType = {
     children?: React.ReactNode;
 } & HeadType;

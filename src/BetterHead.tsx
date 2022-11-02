@@ -1,13 +1,13 @@
 import Head from 'next/head';
 import React, { FC, ReactNode, useContext } from 'react';
 import { HelmetContext } from './HeadProvider';
-import { HeadType } from './types';
+import { HeadProps, HeadType } from './types';
 
-export const BetterHead: FC<HeadType> = (props) => {
+export const BetterHead: FC<HeadProps> = (props) => {
     const defaultValues: HeadType | undefined =
         useContext<HeadType>(HelmetContext);
 
-    const getVal = (key: keyof HeadType): string => {
+    const getVal = (key: keyof Omit<HeadType, 'reverseTitle'>): string => {
         return props[key] || defaultValues?.[key] || '';
     };
 
@@ -17,13 +17,22 @@ export const BetterHead: FC<HeadType> = (props) => {
         return <meta name={key} content={val} />;
     };
 
+    const getTitle = (): string => {
+        const title = getVal('title');
+        const titleDivider = getVal('titleDivider');
+        const subTitle = getVal('subTitle');
+        return props.reverseTitle
+            ? `${title} ${titleDivider} ${subTitle}`
+            : `${subTitle} ${titleDivider} ${title}`;
+    };
+
     return (
         <>
             <Head>
-                <title>{getVal('title')}</title>
-                <meta name='title' content={getVal('title')} />
-                <meta property='og:title' content={getVal('title')} />
-                <meta property='twitter:title' content={getVal('title')} />
+                <title>{getTitle()}</title>
+                <meta name='title' content={getTitle()} />
+                <meta property='og:title' content={getTitle()} />
+                <meta property='twitter:title' content={getTitle()} />
             </Head>
             {props.description ||
                 (defaultValues.description && (
